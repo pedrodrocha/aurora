@@ -6,7 +6,7 @@
     "type": {
       "$ref": "./column-types.json#/$defs/ColumnTypes"
     },
-    "dbType": {
+    "native": {
       "type": "string"
     },
     "nullable": {
@@ -23,5 +23,92 @@
       "default": false
     }
   },
-  "$defs": {}
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "string"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "native": {
+            "anyOf": [
+              {
+                "const": "text"
+              },
+              {
+                "const": "varbit"
+              },
+              {
+                "const": "uuid"
+              },
+              {
+                "const": "inet"
+              },
+              {
+                "const": "citext"
+              },
+              {
+                "type": "string",
+                "pattern": "^char\\(\\d+\\)$"
+              },
+              {
+                "type": "string",
+                "pattern": "^varchar\\(\\d+\\)$"
+              },
+              {
+                "type": "string",
+                "pattern": "^bit\\(\\d+\\)$"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "int"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "native": {
+            "enum": [
+              "int2",
+              "int4",
+              "int8",
+              "serial2",
+              "serial4",
+              "serial8"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "float"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "native": {
+            "enum": [
+              "float4",
+              "float8"
+            ]
+          }
+        }
+      }
+    }
+  ]
 }
