@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "./schema.json",
+  "title": "Aurora DSL",
+  "type": "object",
+  "required": [
+    "datasource",
+    "tables"
+  ],
+  "properties": {
+    "datasource": {
+      "$ref": "./datasource.json"
+    },
+    "tables": {
+      "type": "array"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "datasource": {
+            "properties": {
+              "provider": {
+                "const": "postgres"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "tables": {
+            "items": {
+              "$ref": "./postgres-table.json"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

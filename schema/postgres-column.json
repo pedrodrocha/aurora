@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "./postgres-column.json",
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "./column-types.json#/$defs/ColumnTypes"
+    },
+    "dbType": {
+      "type": "string"
+    },
+    "nullable": {
+      "type": "boolean",
+      "default": false
+    },
+    "default": {},
+    "unique": {
+      "type": "boolean",
+      "default": false
+    },
+    "primary": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "$defs": {}
+}

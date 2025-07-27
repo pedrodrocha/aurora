@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "./column-types.json",
+  "title": "Base Column Types Aurora",
+  "$defs": {
+    "ColumnTypes": {
+      "type": "string",
+      "enum": [
+        "string",
+        "boolean",
+        "int",
+        "float",
+        "decimal",
+        "datetime",
+        "json",
+        "bytes"
+      ]
+    }
+  }
+}

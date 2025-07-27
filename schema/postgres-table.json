@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "./postgres-table.json",
+  "title": "Postgres Table",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "columns": {
+      "type": "array",
+      "items": {
+        "$ref": "./postgres-column.json"
+      }
+    }
+  }
+}

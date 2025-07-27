@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "./datasource.json",
+  "title": "Aurora Datasource Schema Definition",
+  "type": "object",
+  "properties": {
+    "provider": {
+      "enum": [
+        "postgres"
+      ]
+    }
+  }
+}

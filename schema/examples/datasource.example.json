@@ -1,0 +1,4 @@
+{
+  "$schema": "../datasource.json",
+  "provider": "postgres"
+}
