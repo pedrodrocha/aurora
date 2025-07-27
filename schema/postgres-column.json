@@ -80,12 +80,20 @@
         "properties": {
           "native": {
             "enum": [
-              "int2",
+              "integer",
+              "int",
               "int4",
+              "smallint",
+              "int2",
+              "bigint",
               "int8",
+              "smallserial",
               "serial2",
+              "serial",
               "serial4",
-              "serial8"
+              "bigserial",
+              "serial8",
+              "oid"
             ]
           }
         }
@@ -103,8 +111,8 @@
         "properties": {
           "native": {
             "enum": [
-              "float4",
-              "float8"
+              "real",
+              "double precision"
             ]
           }
         }
