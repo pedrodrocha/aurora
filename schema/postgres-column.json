@@ -40,6 +40,9 @@
                 "const": "text"
               },
               {
+                "const": "bpchar"
+              },
+              {
                 "const": "varbit"
               },
               {
@@ -54,6 +57,18 @@
               {
                 "type": "string",
                 "pattern": "^char\\(\\d+\\)$"
+              },
+              {
+                "type": "string",
+                "pattern": "^bpchar\\(\\d+\\)$"
+              },
+              {
+                "type": "string",
+                "pattern": "^character\\(\\d+\\)$"
+              },
+              {
+                "type": "string",
+                "pattern": "^character varyin\\(\\d+\\)$"
               },
               {
                 "type": "string",
