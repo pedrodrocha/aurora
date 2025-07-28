@@ -80,11 +80,11 @@
         "properties": {
           "native": {
             "enum": [
+              "smallint",
+              "int2",
               "integer",
               "int",
               "int4",
-              "smallint",
-              "int2",
               "bigint",
               "int8",
               "smallserial",
@@ -113,6 +113,30 @@
             "enum": [
               "real",
               "double precision"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "decimal"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "native": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(numeric|decimal)(\\(\\d+(,\\d+)?\\))?$"
+              },
+              {
+                "const": "money"
+              }
             ]
           }
         }
