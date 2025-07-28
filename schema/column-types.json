@@ -13,7 +13,9 @@
         "decimal",
         "datetime",
         "json",
-        "bytes"
+        "bytes",
+        "enum",
+        "geometric"
       ]
     }
   }

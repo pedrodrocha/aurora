@@ -37,22 +37,18 @@
           "native": {
             "anyOf": [
               {
-                "const": "text"
-              },
-              {
-                "const": "bpchar"
-              },
-              {
-                "const": "varbit"
-              },
-              {
-                "const": "uuid"
-              },
-              {
-                "const": "inet"
-              },
-              {
-                "const": "citext"
+                "enum": [
+                  "text",
+                  "bpchar",
+                  "varbit",
+                  "uuid",
+                  "inet",
+                  "citext",
+                  "macaddr",
+                  "macaddr8",
+                  "tsvector",
+                  "tsquery"
+                ]
               },
               {
                 "type": "string",
@@ -229,6 +225,49 @@
             "type": {
               "type": "boolean"
             }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "geometric"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "native": {
+            "enum": [
+              "point",
+              "line",
+              "lseg",
+              "box",
+              "path",
+              "polygon",
+              "circle"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "json"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "native": {
+            "enum": [
+              "json",
+              "jsonb"
+            ]
           }
         }
       }
