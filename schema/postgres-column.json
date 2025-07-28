@@ -156,6 +156,82 @@
           }
         }
       }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "bytes"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "native": {
+            "enum": [
+              "bytea"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "datetime"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "native": {
+            "anyOf": [
+              {
+                "const": "date"
+              },
+              {
+                "type": "string",
+                "pattern": "^timestamp\\(\\d+\\)$"
+              },
+              {
+                "type": "string",
+                "pattern": "^timestampz\\(\\d+\\)$"
+              },
+              {
+                "type": "string",
+                "pattern": "^time\\(\\d+\\)$"
+              },
+              {
+                "type": "string",
+                "pattern": "^timez\\(\\d+\\)$"
+              },
+              {
+                "type": "string",
+                "pattern": "^interval(\\(\\d+\\))?(( day| hour| minute| second| month| year)?( to (day|hour|minute|second|month|year))?)?$"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "boolean"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "native": {
+            "type": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
     }
   ]
 }
