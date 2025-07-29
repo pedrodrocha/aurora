@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Postgres Types Schema",
+  "id": "./postgres-types.json",
+  "$defs": {
+    "string": {
+      "anyOf": [
+        {
+          "enum": [
+            "text",
+            "bpchar",
+            "varbit",
+            "uuid",
+            "inet",
+            "citext",
+            "macaddr",
+            "macaddr8",
+            "tsvector",
+            "tsquery"
+          ]
+        },
+        {
+          "type": "string",
+          "pattern": "^char\\(\\d+\\)$"
+        },
+        {
+          "type": "string",
+          "pattern": "^bpchar\\(\\d+\\)$"
+        },
+        {
+          "type": "string",
+          "pattern": "^character\\(\\d+\\)$"
+        },
+        {
+          "type": "string",
+          "pattern": "^character varyin\\(\\d+\\)$"
+        },
+        {
+          "type": "string",
+          "pattern": "^varchar\\(\\d+\\)$"
+        },
+        {
+          "type": "string",
+          "pattern": "^bit\\(\\d+\\)$"
+        }
+      ]
+    },
+    "int": {
+      "enum": [
+        "smallint",
+        "int2",
+        "integer",
+        "int",
+        "int4",
+        "bigint",
+        "int8",
+        "smallserial",
+        "serial2",
+        "serial",
+        "serial4",
+        "bigserial",
+        "serial8",
+        "oid"
+      ]
+    },
+    "float": {
+      "enum": [
+        "real",
+        "double precision"
+      ]
+    },
+    "decimal": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^(numeric|decimal)(\\(\\d+(,\\d+)?\\))?$"
+        },
+        {
+          "const": "money"
+        }
+      ]
+    },
+    "bytes": {
+      "enum": [
+        "bytea"
+      ]
+    },
+    "datetime": {
+      "anyOf": [
+        {
+          "const": "date"
+        },
+        {
+          "type": "string",
+          "pattern": "^timestamp\\(\\d+\\)$"
+        },
+        {
+          "type": "string",
+          "pattern": "^timestampz\\(\\d+\\)$"
+        },
+        {
+          "type": "string",
+          "pattern": "^time\\(\\d+\\)$"
+        },
+        {
+          "type": "string",
+          "pattern": "^timez\\(\\d+\\)$"
+        },
+        {
+          "type": "string",
+          "pattern": "^interval(\\(\\d+\\))?(( day| hour| minute| second| month| year)?( to (day|hour|minute|second|month|year))?)?$"
+        }
+      ]
+    },
+    "boolean": {
+      "type": "boolean"
+    },
+    "geometric": {
+      "enum": [
+        "point",
+        "line",
+        "lseg",
+        "box",
+        "path",
+        "polygon",
+        "circle"
+      ]
+    },
+    "json": {
+      "enum": [
+        "json",
+        "jsonb"
+      ]
+    }
+  }
+}

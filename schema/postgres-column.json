@@ -4,7 +4,7 @@
   "type": "object",
   "properties": {
     "type": {
-      "$ref": "./column-types.json#/$defs/ColumnTypes"
+      "$ref": "./types.json#/$defs/ColumnTypes"
     },
     "native": {
       "type": "string"
@@ -35,46 +35,7 @@
       "then": {
         "properties": {
           "native": {
-            "anyOf": [
-              {
-                "enum": [
-                  "text",
-                  "bpchar",
-                  "varbit",
-                  "uuid",
-                  "inet",
-                  "citext",
-                  "macaddr",
-                  "macaddr8",
-                  "tsvector",
-                  "tsquery"
-                ]
-              },
-              {
-                "type": "string",
-                "pattern": "^char\\(\\d+\\)$"
-              },
-              {
-                "type": "string",
-                "pattern": "^bpchar\\(\\d+\\)$"
-              },
-              {
-                "type": "string",
-                "pattern": "^character\\(\\d+\\)$"
-              },
-              {
-                "type": "string",
-                "pattern": "^character varyin\\(\\d+\\)$"
-              },
-              {
-                "type": "string",
-                "pattern": "^varchar\\(\\d+\\)$"
-              },
-              {
-                "type": "string",
-                "pattern": "^bit\\(\\d+\\)$"
-              }
-            ]
+            "$ref": "./postgres-types.json#/$defs/string"
           }
         }
       }
@@ -90,22 +51,7 @@
       "then": {
         "properties": {
           "native": {
-            "enum": [
-              "smallint",
-              "int2",
-              "integer",
-              "int",
-              "int4",
-              "bigint",
-              "int8",
-              "smallserial",
-              "serial2",
-              "serial",
-              "serial4",
-              "bigserial",
-              "serial8",
-              "oid"
-            ]
+            "$ref": "./postgres-types.json#/$defs/int"
           }
         }
       }
@@ -121,10 +67,7 @@
       "then": {
         "properties": {
           "native": {
-            "enum": [
-              "real",
-              "double precision"
-            ]
+            "$ref": "./postgres-types.json#/$defs/float"
           }
         }
       }
@@ -140,15 +83,7 @@
       "then": {
         "properties": {
           "native": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^(numeric|decimal)(\\(\\d+(,\\d+)?\\))?$"
-              },
-              {
-                "const": "money"
-              }
-            ]
+            "$ref": "./postgres-types.json#/$defs/decimal"
           }
         }
       }
@@ -164,9 +99,7 @@
       "then": {
         "properties": {
           "native": {
-            "enum": [
-              "bytea"
-            ]
+            "$ref": "./postgres-types.json#/$defs/bytes"
           }
         }
       }
@@ -182,31 +115,7 @@
       "then": {
         "properties": {
           "native": {
-            "anyOf": [
-              {
-                "const": "date"
-              },
-              {
-                "type": "string",
-                "pattern": "^timestamp\\(\\d+\\)$"
-              },
-              {
-                "type": "string",
-                "pattern": "^timestampz\\(\\d+\\)$"
-              },
-              {
-                "type": "string",
-                "pattern": "^time\\(\\d+\\)$"
-              },
-              {
-                "type": "string",
-                "pattern": "^timez\\(\\d+\\)$"
-              },
-              {
-                "type": "string",
-                "pattern": "^interval(\\(\\d+\\))?(( day| hour| minute| second| month| year)?( to (day|hour|minute|second|month|year))?)?$"
-              }
-            ]
+            "$ref": "./postgres-types.json#/$defs/datetime"
           }
         }
       }
@@ -222,9 +131,7 @@
       "then": {
         "properties": {
           "native": {
-            "type": {
-              "type": "boolean"
-            }
+            "$ref": "./postgres-types.json#/$defs/boolean"
           }
         }
       }
@@ -240,15 +147,7 @@
       "then": {
         "properties": {
           "native": {
-            "enum": [
-              "point",
-              "line",
-              "lseg",
-              "box",
-              "path",
-              "polygon",
-              "circle"
-            ]
+            "$ref": "./postgres-types.json#/$defs/geometric"
           }
         }
       }
