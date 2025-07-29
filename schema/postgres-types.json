@@ -138,6 +138,18 @@
           "type": "string",
           "pattern": "^([a-zA-Z ]+(\\(\\d+(,\\d+)?\\))?)\\[\\]$",
           "$comment": "Postgres array type"
+        },
+        {
+          "type": "string",
+          "enum": [
+            "int4range",
+            "int8range",
+            "numrange",
+            "tsrange",
+            "tstzrange",
+            "daterange"
+          ],
+          "$comment": "Postgres range type"
         }
       ]
     }
