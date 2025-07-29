@@ -15,7 +15,8 @@
         "json",
         "bytes",
         "enum",
-        "geometric"
+        "geometric",
+        "extended"
       ]
     }
   }

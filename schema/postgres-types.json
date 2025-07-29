@@ -131,6 +131,15 @@
         "json",
         "jsonb"
       ]
+    },
+    "extended": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^([a-zA-Z ]+(\\(\\d+(,\\d+)?\\))?)\\[\\]$",
+          "$comment": "Postgres array type"
+        }
+      ]
     }
   }
 }
