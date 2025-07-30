@@ -9,5 +9,8 @@
         "postgres"
       ]
     }
-  }
+  },
+  "required": [
+    "provider"
+  ]
 }

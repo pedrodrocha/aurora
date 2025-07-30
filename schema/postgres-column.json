@@ -14,17 +14,14 @@
       "type": "string"
     },
     "nullable": {
-      "type": "boolean",
-      "default": false
+      "type": "boolean"
     },
     "default": {},
     "unique": {
-      "type": "boolean",
-      "default": false
+      "type": "boolean"
     },
     "primary": {
-      "type": "boolean",
-      "default": false
+      "type": "boolean"
     }
   },
   "allOf": [
@@ -168,6 +165,38 @@
         "properties": {
           "native": {
             "$ref": "./postgres-types.json#/$defs/json"
+          }
+        }
+      }
+    }, 
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "enum"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "native": {
+            "$ref": "./postgres-types.json#/$defs/enum"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "extended"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "native": {
+            "$ref": "./postgres-types.json#/$defs/extended"
           }
         }
       }
