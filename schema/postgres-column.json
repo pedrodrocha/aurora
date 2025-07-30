@@ -16,7 +16,31 @@
     "nullable": {
       "type": "boolean"
     },
-    "default": {},
+    "default": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "expr": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "expr"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
     "unique": {
       "type": "boolean"
     },
@@ -172,7 +196,7 @@
           }
         }
       }
-    }, 
+    },
     {
       "if": {
         "properties": {
@@ -188,7 +212,9 @@
           },
           "values": {
             "type": "array",
-            "items": {"type": "string"},
+            "items": {
+              "type": "string"
+            },
             "minItems": 1
           }
         }

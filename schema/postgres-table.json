@@ -16,8 +16,7 @@
     },
     "schema": {
       "type": "string",
-      "pattern": "^([A-Za-z_][A-Za-z0-9_]*)$",
-      "description": "PostgreSQL schema name; defaults to 'public' if omitted"
+      "pattern": "^([A-Za-z_][A-Za-z0-9_]*)$"
     },
     "attributes": {
       "type": "object",
