@@ -45,6 +45,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "userTypes": {
+            "$ref": "./postgres-user-defined-types.json"
           }
         }
       }

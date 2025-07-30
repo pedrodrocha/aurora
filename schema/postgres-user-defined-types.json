@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Postgres user-defined types DDL",
+  "type": "array",
+  "items": {
+    "anyOf": [
+      {
+        "type": "object",
+        "title": "Enum Type Definition",
+        "required": [
+          "name",
+          "type",
+          "values"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+          },
+          "type": {
+            "const": "enum"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "title": "Composite Type Definition",
+        "required": [
+          "name",
+          "type",
+          "attributes"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+          },
+          "type": {
+            "const": "composite"
+          },
+          "attributes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "type"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+                },
+                "type": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "title": "Domain Type Definition",
+        "required": [
+          "name",
+          "type",
+          "baseType"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+          },
+          "type": {
+            "const": "domain"
+          },
+          "baseType": {
+            "type": "string"
+          },
+          "check": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    ]
+  }
+}
