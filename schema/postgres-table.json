@@ -13,6 +13,58 @@
       "items": {
         "$ref": "./postgres-column.json"
       }
+    },
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "indexes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "columns": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "description": "Name of the column included in the index"
+                },
+                "description": "Columns included in the index (one or more for composite indexes)"
+              },
+              "unique": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether the index enforces uniqueness"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "btree",
+                  "hash",
+                  "gin",
+                  "gist",
+                  "spgist",
+                  "brin"
+                ],
+                "default": "btree",
+                "description": "The index method used"
+              }
+            },
+            "required": [
+              "columns"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": true
     }
-  }
+  },
+  "required": [
+    "name",
+    "columns"
+  ]
 }
