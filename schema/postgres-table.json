@@ -20,7 +20,7 @@
         "primaryKey": {
           "type": "object",
           "properties": {
-            "name": {
+            "map": {
               "type": "string"
             },
             "columns": {
