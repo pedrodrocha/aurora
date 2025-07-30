@@ -39,6 +39,12 @@
             "items": {
               "$ref": "./postgres-table.json"
             }
+          },
+          "extensions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }
