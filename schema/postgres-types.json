@@ -126,7 +126,10 @@
       ]
     },
     "boolean": {
-      "enum": ["boolean", "bool"]
+      "enum": [
+        "boolean",
+        "bool"
+      ]
     },
     "geometric": {
       "enum": [
@@ -166,6 +169,11 @@
             "daterange"
           ],
           "$comment": "Postgres range type"
+        },
+        {
+          "type": "string",
+          "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*(\\.[a-zA-Z_][a-zA-Z0-9_]*)?$",
+          "$comment": "Postgres domain type (schema-qualified or unqualified identifiers)"
         }
       ]
     }
