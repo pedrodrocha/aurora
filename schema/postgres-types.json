@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Postgres Types Schema",
-  "id": "./postgres-types.json",
+  "id": "./types.json",
   "$defs": {
     "string": {
       "anyOf": [
@@ -92,6 +92,18 @@
           "const": "date"
         },
         {
+          "const": "timestamp"
+        },
+        {
+          "const": "timestamptz"
+        },
+        {
+          "const": "time"
+        },
+        {
+          "const": "timetz"
+        },
+        {
           "type": "string",
           "pattern": "^timestamp\\(\\d+\\)$"
         },
@@ -114,7 +126,7 @@
       ]
     },
     "boolean": {
-      "type": "boolean"
+      "enum": ["boolean", "bool"]
     },
     "geometric": {
       "enum": [
@@ -132,6 +144,10 @@
         "json",
         "jsonb"
       ]
+    },
+    "enum": {
+      "type": "string",
+      "const": "enum"
     },
     "extended": {
       "anyOf": [
