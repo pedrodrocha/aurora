@@ -1,18 +1,23 @@
-# Aurora DSL - PostgreSQL Schema Representation
+# 🌌 Aurora DSL
+**A Declarative Schema Definition Language for PostgreSQL**
 
-A declarative schema definition language for representing PostgreSQL database schemas in JSON/YAML format, enabling bidirectional translation between database structures and portable schema files.
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE) [![Status](https://img.shields.io/badge/status-early--stage-orange)](docs/BIDIRECTIONAL_TRANSLATION.md)
 
-## Overview
+> A **schema definition language** for representing PostgreSQL database schemas in JSON/YAML format, enabling **bidirectional translation** between database structures and portable schema files.
 
-Aurora DSL provides:
-- **Schema Portability** – Represent database schema as version-controlled JSON/YAML
-- **Round-Trip Fidelity** – Translate schema ↔ DB without losing information
-- **Validation** – Built-in JSON Schema validation for correctness
-- **Extensibility** – Clear architecture for adding support for more databases
+A declarative schema definition language for representing **PostgreSQL database schemas** in JSON/YAML format, enabling bidirectional translation between database structures and portable schema files. Built with a modular architecture ready for multi-database support.
+
+## ✨ Features
+
+- **Schema Portability**: Represent database schema as version-controlled JSON/YAML
+- **Round-Trip Fidelity**: Translate schema ↔ DB without losing information
+- **Validation**: Built-in JSON Schema validation for correctness
+- **Extensibility**: Clear architecture for adding support for more databases
+- **Apache 2.0 Licensed**: Permissive open-source license for free use and modification
 
 Currently focused on PostgreSQL with a modular, extensible structure ready for multi-database support.
 
-## Architecture
+## 🛠 Architecture
 
 The DSL is composed of several modular schema files:
 
@@ -27,7 +32,7 @@ The DSL is composed of several modular schema files:
 
 All files conform to [JSON Schema Draft 2020-12](https://json-schema.org/draft/2020-12/schema).
 
-## Core Concepts
+## 🔧 Core Concepts
 
 ### Datasource
 ```json
@@ -136,10 +141,9 @@ Index specification includes type and uniqueness:
 }
 ```
 
-## Validation
+## 🔍 Validation
 
 All schema files are valid JSON Schema documents. Use any standard JSON Schema validator to ensure compliance when creating or modifying schemas.
-
 
 For instance, validate a schema using online tools or local libraries like:
 ```bash
@@ -148,4 +152,4 @@ ajv validate -s schema.json -d complete-schema.example.json
 
 > ⚠️ **Project Status**: The DSL currently contains an early representation of PostgreSQL schema concepts. The project is now moving into the implementation phase for bidirectional translation capabilities (DB ↔ JSON).
 
-For bidirectional translation requirements and design considerations, see [Bidirectional Translation](./docs/BIDIRECTIONAL_TRANSLATION.md).
+For bidirectional translation requirements and design considerations, see [Bidirectional Translation](BIDIRECTIONAL_TRANSLATION.md).
