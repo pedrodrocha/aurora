@@ -1,5 +1,6 @@
 {
   "$schema": "../postgres-table.json",
+  "version": "0.0.1",
   "name": "users",
   "columns": [
     {
@@ -18,7 +19,7 @@
     },
     {
       "name": "email",
-      "type": "string", 
+      "type": "string",
       "native": "text",
       "nullable": false
     },
@@ -39,16 +40,22 @@
   ],
   "attributes": {
     "primaryKey": {
-      "columns": ["id"]
+      "columns": [
+        "id"
+      ]
     },
     "indexes": [
       {
-        "columns": ["username"],
+        "columns": [
+          "username"
+        ],
         "unique": true,
         "type": "btree"
       },
       {
-        "columns": ["email"],
+        "columns": [
+          "email"
+        ],
         "type": "btree"
       }
     ]

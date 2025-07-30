@@ -5,9 +5,14 @@
   "type": "object",
   "required": [
     "datasource",
-    "tables"
+    "tables",
+    "version"
   ],
   "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
     "datasource": {
       "$ref": "./datasource.json"
     },
