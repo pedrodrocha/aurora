@@ -1,0 +1,237 @@
+{
+  "$schema": "../schema.json",
+  "datasource": {
+    "provider": "postgres"
+  },
+  "tables": [
+    {
+      "name": "categories",
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "native": "serial",
+          "nullable": false,
+          "primary": true
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "native": "varchar(100)",
+          "nullable": false,
+          "unique": true
+        },
+        {
+          "name": "parent_id",
+          "type": "int",
+          "native": "integer",
+          "nullable": true
+        }
+      ],
+      "attributes": {
+        "primaryKey": {
+          "columns": ["id"]
+        },
+        "indexes": [
+          {
+            "columns": ["parent_id"],
+            "type": "btree"
+          }
+        ],
+        "relations": [
+          {
+            "columns": ["parent_id"],
+            "referencedTable": "categories",
+            "referencedColumns": ["id"],
+            "onUpdate": "CASCADE",
+            "onDelete": "SET NULL"
+          }
+        ]
+      }
+    },
+    {
+      "name": "users",
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "native": "bigserial",
+          "nullable": false,
+          "primary": true
+        },
+        {
+          "name": "username",
+          "type": "string",
+          "native": "varchar(50)",
+          "nullable": false,
+          "unique": true
+        },
+        {
+          "name": "email",
+          "type": "string",
+          "native": "text",
+          "nullable": false,
+          "unique": true
+        },
+        {
+          "name": "password_hash",
+          "type": "string",
+          "native": "char(60)",
+          "nullable": false
+        },
+        {
+          "name": "profile_data",
+          "type": "json",
+          "native": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "ip_address",
+          "type": "string",
+          "native": "inet",
+          "nullable": true
+        },
+        {
+          "name": "subnet",
+          "type": "string",
+          "native": "cidr",
+          "nullable": true
+        },
+        {
+          "name": "mac_address",
+          "type": "string",
+          "native": "macaddr",
+          "nullable": true
+        },
+        {
+          "name": "avatar",
+          "type": "bytes",
+          "native": "bytea",
+          "nullable": true
+        },
+        {
+          "name": "date_of_birth",
+          "type": "datetime",
+          "native": "date",
+          "nullable": true
+        },
+        {
+          "name": "last_login",
+          "type": "datetime",
+          "native": "timestamptz",
+          "nullable": true
+        },
+        {
+          "name": "session_timeout",
+          "type": "datetime",
+          "native": "interval",
+          "nullable": true
+        },
+        {
+          "name": "is_verified",
+          "type": "boolean",
+          "native": "boolean",
+          "nullable": false,
+          "default": false
+        }
+      ],
+      "attributes": {
+        "primaryKey": {
+          "columns": ["id"]
+        },
+        "indexes": [
+          {
+            "columns": ["username"],
+            "unique": true,
+            "type": "btree"
+          },
+          {
+            "columns": ["email"],
+            "unique": true,
+            "type": "btree"
+          },
+          {
+            "columns": ["profile_data"],
+            "type": "gin"
+          }
+        ]
+      }
+    },
+    {
+      "name": "orders",
+      "columns": [
+        {
+          "name": "id",
+          "type": "string",
+          "native": "uuid",
+          "nullable": false,
+          "primary": true
+        },
+        {
+          "name": "user_id",
+          "type": "int",
+          "native": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "total_amount",
+          "type": "decimal",
+          "native": "numeric(15,4)",
+          "nullable": false
+        },
+        {
+          "name": "order_date",
+          "type": "datetime",
+          "native": "timestamptz",
+          "nullable": false
+        },
+        {
+          "name": "shipping_address",
+          "type": "geometric",
+          "native": "point",
+          "nullable": true
+        },
+        {
+          "name": "delivery_window",
+          "type": "extended",
+          "native": "tsrange",
+          "nullable": true
+        },
+        {
+          "name": "item_ids",
+          "type": "extended",
+          "native": "uuid[]",
+          "nullable": true
+        }
+      ],
+      "attributes": {
+        "primaryKey": {
+          "columns": ["id"]
+        },
+        "indexes": [
+          {
+            "columns": ["user_id"],
+            "type": "btree"
+          },
+          {
+            "columns": ["order_date"],
+            "type": "brin"
+          },
+          {
+            "columns": ["shipping_address"],
+            "type": "gist"
+          }
+        ],
+        "relations": [
+          {
+            "columns": ["user_id"],
+            "referencedTable": "users",
+            "referencedColumns": ["id"],
+            "onUpdate": "CASCADE",
+            "onDelete": "CASCADE"
+          }
+        ]
+      }
+    }
+  ]
+}

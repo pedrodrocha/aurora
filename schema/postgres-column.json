@@ -185,6 +185,11 @@
         "properties": {
           "native": {
             "$ref": "./postgres-types.json#/$defs/enum"
+          },
+          "values": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 1
           }
         }
       }

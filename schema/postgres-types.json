@@ -146,8 +146,7 @@
       ]
     },
     "enum": {
-      "type": "string",
-      "const": "enum"
+      "type": "string"
     },
     "extended": {
       "anyOf": [

@@ -1,0 +1,44 @@
+{
+  "$schema": "../postgres-table.json",
+  "name": "user_roles",
+  "columns": [
+    {
+      "name": "id",
+      "type": "int",
+      "native": "serial",
+      "nullable": false,
+      "primary": true
+    },
+    {
+      "name": "user_id",
+      "type": "int",
+      "native": "bigint",
+      "nullable": false
+    },
+    {
+      "name": "role",
+      "type": "enum",
+      "native": "user_role_type",
+      "values": ["admin", "user", "moderator"],
+      "nullable": false
+    },
+    {
+      "name": "granted_at",
+      "type": "datetime",
+      "native": "timestamptz",
+      "nullable": false
+    }
+  ],
+  "attributes": {
+    "primaryKey": {
+      "columns": ["id"]
+    },
+    "indexes": [
+      {
+        "columns": ["user_id", "role"],
+        "unique": true,
+        "type": "btree"
+      }
+    ]
+  }
+}
