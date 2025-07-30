@@ -5,7 +5,6 @@
 
 > **Aurora**
 > A system for bidirectional translation between database schemas and portable representations like JSON and YAML, designed to support multiple relational databases with round-trip fidelity.
-
 > Built around a schema definition language and validation framework, Aurora aims to provide tools for modeling, translating, viewing, diffing, and migrating full database structures across environments and formats. The project is currently in early development.
 
 ## ✨ Vision & Capabilities
@@ -55,19 +54,6 @@ Schema from DB      Translation          DDL from Schema
 ```
 
 
-## Project Philosophy
-
-Aurora is built with empathy for developers and deep respect for the craft of software engineering.
-
-Every aspect of Aurora is designed intentionally. We prefer clarity and purpose over clutter and guesswork. We acknoledge the complexity of database system not as a hurdle to automate away, but as a domain deserving thoughtful representation and tooling.
-
-At its core, Aurora believes in:
-- **Tooling that understands the pain**. Aurora is built by and for developers who've felt the friction of schema management.
-- **Intentional design**. Every feature exists to serve a clear need, nothing more.
-- **Code as craft**. Code is a language. Is how we express ourselves, and should be approached with care and love. 
-- **Human-centered development**. TOols should be made by people, for people and should not be optimized into sterility.
-
-Aurora strives to feel good to use, predictable but not simplistic, and powerfully opinionated without being imposing.
 ___
 
 
