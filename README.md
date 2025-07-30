@@ -3,7 +3,7 @@
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE) [![Status](https://img.shields.io/badge/status-early--stage-orange)]
 
-> **Aurora**
+> **Aurora**\n
 > A system for bidirectional translation between database schemas and portable representations like JSON and YAML, designed to support multiple relational databases with round-trip fidelity.
 > Built around a schema definition language and validation framework, Aurora aims to provide tools for modeling, translating, viewing, diffing, and migrating full database structures across environments and formats. The project is currently in early development.
 
@@ -19,9 +19,6 @@
 
 
 ## 🧠 Conceptual Visualization
-
-
-### Aurora Architecture Overview
 
 
 ```
