@@ -140,20 +140,12 @@ Index specification includes type and uniqueness:
 
 All schema files are valid JSON Schema documents. Use any standard JSON Schema validator to ensure compliance when creating or modifying schemas.
 
+
 For instance, validate a schema using online tools or local libraries like:
 ```bash
 ajv validate -s schema.json -d complete-schema.example.json
 ```
 
-## Roadmap
+> ⚠️ **Project Status**: The DSL currently contains an early representation of PostgreSQL schema concepts. The project is now moving into the implementation phase for bidirectional translation capabilities (DB ↔ JSON).
 
-Future enhancements will include:
-- Versioning support
-- Better default expression handling
-- Sequence and identity column support
-- Check constraint definitions
-- Collation and character set support
-- Support for views, materialized views, and partitions
-- Multi-database support framework
-
-
+For bidirectional translation requirements and design considerations, see [Bidirectional Translation](./docs/BIDIRECTIONAL_TRANSLATION.md).
