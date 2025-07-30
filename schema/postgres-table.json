@@ -127,6 +127,23 @@
             ],
             "additionalProperties": false
           }
+        },
+        "checkConstraints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "condition": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "condition"
+            ]
+          }
         }
       },
       "additionalProperties": true
