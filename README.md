@@ -150,6 +150,8 @@ For instance, validate a schema using online tools or local libraries like:
 ajv validate -s schema.json -d complete-schema.example.json
 ```
 
+___
+
 > ⚠️ **Project Status**: The DSL currently contains an early representation of PostgreSQL schema concepts. The project is now moving into the implementation phase for bidirectional translation capabilities (DB ↔ JSON).
 
 For bidirectional translation requirements and design considerations, see [Bidirectional Translation](BIDIRECTIONAL_TRANSLATION.md).
