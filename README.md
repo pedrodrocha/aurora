@@ -53,7 +53,6 @@ Schema from DB      Translation          DDL from Schema
 ___
 
 
-> ⚠️ **Project Status**: This project is in its conceptual phase. A foundational schema for PostgreSQL exists, but translation capabilities are still being implemented.
+> ⚠️ **Project Status**: This project is in its conceptual phase. A foundational schema for PostgreSQL exists, and bidirectional translation is being implemented
 
-For current requirements and implementation planning, see [Bidirectional Translation](./docs/BIDIRECTIONAL_TRANSLATION.md).
 
