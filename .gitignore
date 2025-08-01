@@ -1,3 +1,6 @@
 .markdownlint-cli2.yaml
 .env
 .notes/*
+mise.toml
+.crush
+CRUSH.md
