@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/pedro/aurora/cmd/config"
 	"github.com/spf13/cobra"
 )
 
@@ -20,4 +21,8 @@ func Execute() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+}
+
+func init() {
+	rootCmd.AddCommand(config.New())
 }
