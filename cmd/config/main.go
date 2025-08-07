@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/charmbracelet/huh"
+	"github.com/pedro/aurora/pkg/provider"
 	"github.com/spf13/cobra"
 )
 
@@ -14,14 +15,27 @@ func New() *cobra.Command {
 		Short: "Generate configuration file for Aurora",
 		Long:  "Generate interactively a config file for Aurora",
 		Run: func(cmd *cobra.Command, args []string) {
-			var name string
+			var selectedProvider provider.Provider
 
-			huh.NewInput().
-				Title("What’s your name?").
-				Value(&name).
-				Run() // this is blocking...
+			providerOptions := []huh.Option[provider.Provider]{}
+			for _, p := range provider.All() {
+				providerOptions = append(providerOptions, huh.NewOption(p.Label(), p))
+			}
 
-			fmt.Printf("Hey, %s!\n", name)
+			form := huh.NewForm(
+				huh.NewGroup(
+					huh.NewSelect[provider.Provider]().
+						Title("Select a Provider").
+						Options(providerOptions...),
+				),
+			)
+
+			if err := form.Run(); err != nil {
+				fmt.Println("Error running form:", err)
+				return
+			}
+
+			fmt.Println("Selected Provider:", selectedProvider)
 		},
 	}
 
