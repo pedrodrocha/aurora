@@ -15,7 +15,13 @@ func New() *cobra.Command {
 		Short: "Generate configuration file for Aurora",
 		Long:  "Generate interactively a config file for Aurora",
 		Run: func(cmd *cobra.Command, args []string) {
-			var selectedProvider provider.Provider
+			var (
+				selectedProvider provider.Provider
+				host             string
+				port             string
+				user             string
+				password         string
+			)
 
 			providerOptions := []huh.Option[provider.Provider]{}
 			for _, p := range provider.All() {
@@ -27,6 +33,20 @@ func New() *cobra.Command {
 					huh.NewSelect[provider.Provider]().
 						Title("Select a Provider").
 						Options(providerOptions...),
+
+					huh.NewInput().
+						Title("Host").
+						Value(&host),
+
+					huh.NewInput().
+						Title("Port").
+						Value(&port),
+					huh.NewInput().
+						Title("User").
+						Value(&user),
+					huh.NewInput().
+						Title("Password").
+						Value(&password),
 				),
 			)
 
@@ -35,7 +55,11 @@ func New() *cobra.Command {
 				return
 			}
 
-			fmt.Println("Selected Provider:", selectedProvider)
+			fmt.Println("Provider: ", selectedProvider)
+			fmt.Println("Host: ", host)
+			fmt.Println("Port: ", port)
+			fmt.Println("User: ", user)
+			fmt.Println("Password: ", password)
 		},
 	}
 
