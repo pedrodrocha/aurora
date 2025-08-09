@@ -29,6 +29,4 @@ func init() {
 	rootCmd.AddCommand(configCmd.New())
 
 	config.Init()
-
-	config.Import()
 }

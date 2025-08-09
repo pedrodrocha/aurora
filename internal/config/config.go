@@ -52,6 +52,8 @@ func Init() {
 	viper.SetConfigType("toml")
 	viper.AddConfigPath("./.aurora/")
 
+	viper.ReadInConfig()
+
 	viper.SetDefault("provider.type", "postgres")
 	viper.SetDefault("provider.postgres.port", 5432)
 	viper.SetDefault("provider.postgres.schema", "public")
