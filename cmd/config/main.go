@@ -15,11 +15,14 @@ func New() *cobra.Command {
 		Long:  "Generate interactively a config file for Aurora",
 		Run: func(cmd *cobra.Command, args []string) {
 			exists := config.Exists()
-			fmt.Println("exists config: ", exists)
+			loaded, _ := config.Load()
+			fmt.Println("exists: ", exists)
+			fmt.Println("loaded", loaded)
+			fmt.Println(loaded.Provider.Type.Label())
 
-			config.ExecuteForm()
+			// config.ExecuteForm()
 
-			config.Generate()
+			// config.Generate()
 		},
 	}
 

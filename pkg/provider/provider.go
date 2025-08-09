@@ -3,31 +3,15 @@ package provider
 
 import "fmt"
 
-type Provider int
-
-const Unknown Provider = -1
+type Provider string
 
 const (
-	Postgres Provider = iota
+	Unknown  Provider = "unknown"
+	Postgres Provider = "postgres"
 )
-
-var providerIds = map[Provider]string{
-	Postgres: "postgres",
-}
-
-var providerValues = map[string]Provider{
-	"postgres": Postgres,
-}
 
 var providerLabels = map[Provider]string{
 	Postgres: "Postgres",
-}
-
-func (p Provider) String() string {
-	if name, ok := providerIds[p]; ok {
-		return name
-	}
-	return "unknown"
 }
 
 func (p Provider) Label() string {
@@ -38,22 +22,27 @@ func (p Provider) Label() string {
 }
 
 func IsSupported(p Provider) bool {
-	_, ok := providerIds[p]
-	return ok
+	return p != Unknown
 }
 
 func Parse(s string) (Provider, error) {
-	p, ok := providerValues[s] // s is string, keys are string
-	if !ok {
+	switch Provider(s) {
+	case Postgres:
+		return Postgres, nil
+	default:
 		return Unknown, fmt.Errorf("unknown provider %q", s)
 	}
-	return p, nil
+}
+
+func (p *Provider) UnmarshalText(text []byte) error {
+	val, err := Parse(string(text))
+	if err != nil {
+		return err
+	}
+	*p = val
+	return nil
 }
 
 func All() []Provider {
-	providers := make([]Provider, 0, len(providerIds))
-	for p := range providerIds {
-		providers = append(providers, p)
-	}
-	return providers
+	return []Provider{Postgres}
 }

@@ -28,7 +28,7 @@ func Execute() {
 func init() {
 	rootCmd.AddCommand(configCmd.New())
 
-	config.Define()
+	config.Init()
 
 	config.Import()
 }
