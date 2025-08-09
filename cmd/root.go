@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/pedro/aurora/cmd/config"
 	"github.com/spf13/cobra"
+
+	configCmd "github.com/pedro/aurora/cmd/config"
+	"github.com/pedro/aurora/internal/config"
 )
 
 var rootCmd = &cobra.Command{
@@ -24,5 +26,9 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.AddCommand(config.New())
+	rootCmd.AddCommand(configCmd.New())
+
+	config.Define()
+
+	config.Import()
 }
