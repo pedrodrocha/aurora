@@ -44,6 +44,8 @@ var defaults = map[string]any{
 	"provider.postgres.schema": "public",
 }
 
+// Load reads and unmarshals the configuration into a Config struct.
+// Returns an error if the configuration cannot be unmarshaled.
 func Load() (*Config, error) {
 	var cfg Config
 	if err := viper.Unmarshal(&cfg); err != nil {
@@ -53,53 +55,79 @@ func Load() (*Config, error) {
 	return &cfg, nil
 }
 
+// Generate creates a new configuration file with default values.
+// Currently prints a placeholder message - implementation pending.
 func Generate() {
 	fmt.Println("...generating config")
 }
 
+// Exists checks if a configuration file exists and has been loaded.
+// Returns true if a config file path is set in viper.
 func Exists() bool {
 	config := viper.ConfigFileUsed()
-
 	return config != ""
 }
 
-func Init() {
+// Init initializes the configuration system.
+// Returns an error if configuration fails to load.
+func Init() error {
+	if err := setupViper(); err != nil {
+		return fmt.Errorf("viper setup failed: %w", err)
+	}
+
+	if err := loadConfig(); err != nil {
+		return fmt.Errorf("config load failed: %w", err)
+	}
+
+	if err := loadEnv(); err != nil {
+		return fmt.Errorf("env load failed: %w", err)
+	}
+
+	setDefaults()
+	return nil
+}
+
+func setupViper() error {
 	viper.SetConfigName("config")
 	viper.SetConfigType("toml")
 	viper.AddConfigPath("./.aurora/")
-
-	read()
-	mergeEnv()
-	setDefaults()
+	return nil
 }
 
-func read() {
+func loadConfig() error {
 	if err := viper.ReadInConfig(); err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			// Config file not found
-		} else {
-			panic(fmt.Errorf("fatal error config file: %w", err))
+		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+			return fmt.Errorf("config file error: %w", err)
 		}
+		// Config file not found is not an error
 	}
+	return nil
 }
 
-func mergeEnv() {
-	godotenv.Load()
+func loadEnv() error {
+	if err := godotenv.Load(); err != nil {
+		log.Printf("warning: .env file not found: %v", err)
+	}
+
 	viper.AutomaticEnv()
 
-	bindEnvVars()
-	resolveEnvVars()
+	if err := bindEnvVars(); err != nil {
+		return fmt.Errorf("env binding failed: %w", err)
+	}
+
+	return resolveEnvVars()
 }
 
-func bindEnvVars() {
+func bindEnvVars() error {
 	for key, env := range envBindings {
 		if err := viper.BindEnv(key, env); err != nil {
-			log.Fatalf("bind env error: %v", err)
+			return fmt.Errorf("failed to bind %s to %s: %w", key, env, err)
 		}
 	}
+	return nil
 }
 
-func resolveEnvVars() {
+func resolveEnvVars() error {
 	all := viper.AllKeys()
 
 	for _, key := range all {
@@ -108,9 +136,12 @@ func resolveEnvVars() {
 		if envName, ok := strings.CutPrefix(val, "ENV::"); ok {
 			if envVal, ok := os.LookupEnv(envName); ok {
 				viper.Set(key, envVal)
+			} else {
+				return fmt.Errorf("required env var %s not set (referenced by %s)", envName, key)
 			}
 		}
 	}
+	return nil
 }
 
 func setDefaults() {
