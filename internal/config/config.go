@@ -3,7 +3,6 @@ package config
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"strings"
 
@@ -105,9 +104,7 @@ func loadConfig() error {
 }
 
 func loadEnv() error {
-	if err := godotenv.Load(); err != nil {
-		log.Printf("warning: .env file not found: %v", err)
-	}
+	_ = godotenv.Load()
 
 	viper.AutomaticEnv()
 
