@@ -29,7 +29,13 @@ func Generate() {
 }
 
 func Import() {
-	viper.ReadInConfig()
+	if err := viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			// Config file not found
+		} else {
+			panic(fmt.Errorf("fatal error config file: %w", err))
+		}
+	}
 }
 
 func Exists() bool {
@@ -52,7 +58,7 @@ func Init() {
 	viper.SetConfigType("toml")
 	viper.AddConfigPath("./.aurora/")
 
-	viper.ReadInConfig()
+	Import()
 
 	viper.SetDefault("provider.type", "postgres")
 	viper.SetDefault("provider.postgres.port", 5432)
