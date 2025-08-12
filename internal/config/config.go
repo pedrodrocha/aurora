@@ -3,6 +3,7 @@ package config
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strings"
 
@@ -25,6 +26,16 @@ type PostgresConfig struct {
 	Password string `mapstructure:"password"`
 	Database string `mapstructure:"database"`
 	Schema   string `mapstructure:"schema"`
+}
+
+var envBindings = map[string]string{
+	"provider.type":              "PROVIDER_TYPE",
+	"provider.postgres.host":     "PROVIDER_POSTGRES_HOST",
+	"provider.postgres.port":     "PROVIDER_POSTGRES_PORT",
+	"provider.postgres.user":     "PROVIDER_POSTGRES_USER",
+	"provider.postgres.password": "PROVIDER_POSTGRES_PASSWORD",
+	"provider.postgres.database": "PROVIDER_POSTGRES_DATABASE",
+	"provider.postgres.schema":   "PROVIDER_POSTGRES_SCHEMA",
 }
 
 func Load() (*Config, error) {
@@ -70,37 +81,34 @@ func mergeEnv() {
 	godotenv.Load()
 	viper.AutomaticEnv()
 
-	viper.BindEnv("provider.type", "PROVIDER_PROVIDER")
-
-	viper.BindEnv("provider.postgres.host", "PROVIDER_POSTGRES_HOST")
-	viper.BindEnv("provider.postgres.port", "PROVIDER_POSTGRES_PORT")
-	viper.BindEnv("provider.postgres.user", "PROVIDER_POSTGRES_USER")
-	viper.BindEnv("provider.postgres.host", "PROVIDER_POSTGRES_PASSWORD")
-	viper.BindEnv("provider.postgres.host", "PROVIDER_POSTGRES_DATABASE")
-	viper.BindEnv("provider.postgres.host", "PROVIDER_POSTGRES_SCHEMA")
-
+	bindEnvVars()
 	resolveEnvVars()
+}
+
+func bindEnvVars() {
+	for key, env := range envBindings {
+		if err := viper.BindEnv(key, env); err != nil {
+			log.Fatalf("bind env error: %v", err)
+		}
+	}
+}
+
+func resolveEnvVars() {
+	all := viper.AllKeys()
+
+	for _, key := range all {
+		val := viper.GetString(key)
+
+		if envName, ok := strings.CutPrefix(val, "ENV::"); ok {
+			if envVal, ok := os.LookupEnv(envName); ok {
+				viper.Set(key, envVal)
+			}
+		}
+	}
 }
 
 func setDefaults() {
 	viper.SetDefault("provider.type", "postgres")
 	viper.SetDefault("provider.postgres.port", 5432)
 	viper.SetDefault("provider.postgres.schema", "public")
-}
-
-func resolveEnvVars() {
-	// iterate over all keys and for string values that start with "ENV::" replace them
-	for _, key := range viper.AllKeys() {
-		val := viper.Get(key)
-		strVal, ok := val.(string)
-		if !ok {
-			continue
-		}
-		if strings.HasPrefix(strVal, "ENV::") {
-			envName := strings.TrimPrefix(strVal, "ENV::")
-			if envVal, ok := os.LookupEnv(envName); ok {
-				viper.Set(key, envVal)
-			}
-		}
-	}
 }
