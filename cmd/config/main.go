@@ -17,7 +17,7 @@ func New() *cobra.Command {
 			exists := config.Exists()
 			loaded, _ := config.Load()
 			fmt.Println("exists: ", exists)
-			fmt.Println("loaded", loaded)
+			fmt.Println("loaded: ", loaded)
 			// config.ExecuteForm()
 
 			// config.Generate()

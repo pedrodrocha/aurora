@@ -4,6 +4,7 @@ package config
 import (
 	"fmt"
 
+	"github.com/joho/godotenv"
 	"github.com/pedro/aurora/pkg/provider"
 	"github.com/spf13/viper"
 )
@@ -22,6 +23,15 @@ type PostgresConfig struct {
 	Password string `mapstructure:"password"`
 	Database string `mapstructure:"database"`
 	Schema   string `mapstructure:"schema"`
+}
+
+func Load() (*Config, error) {
+	var cfg Config
+	if err := viper.Unmarshal(&cfg); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal config: %w", err)
+	}
+
+	return &cfg, nil
 }
 
 func Generate() {
@@ -44,15 +54,6 @@ func Exists() bool {
 	return config != ""
 }
 
-func Load() (*Config, error) {
-	var cfg Config
-	if err := viper.Unmarshal(&cfg); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal config: %w", err)
-	}
-
-	return &cfg, nil
-}
-
 func Init() {
 	viper.SetConfigName("config")
 	viper.SetConfigType("toml")
@@ -60,7 +61,21 @@ func Init() {
 
 	Import()
 
+	godotenv.Load()
+	viper.AutomaticEnv()
+
 	viper.SetDefault("provider.type", "postgres")
 	viper.SetDefault("provider.postgres.port", 5432)
 	viper.SetDefault("provider.postgres.schema", "public")
+
+	viper.BindEnv("provider.type", "PROVIDER_PROVIDER")
+
+	viper.BindEnv("provider.postgres.host", "PROVIDER_POSTGRES_HOST")
+	viper.BindEnv("provider.postgres.port", "PROVIDER_POSTGRES_PORT")
+	viper.BindEnv("provider.postgres.user", "PROVIDER_POSTGRES_USER")
+	viper.BindEnv("provider.postgres.host", "PROVIDER_POSTGRES_PASSWORD")
+	viper.BindEnv("provider.postgres.host", "PROVIDER_POSTGRES_DATABASE")
+	viper.BindEnv("provider.postgres.host", "PROVIDER_POSTGRES_SCHEMA")
+
+	fmt.Println("Provider:", viper.GetString("provider.postgres.host"))
 }
