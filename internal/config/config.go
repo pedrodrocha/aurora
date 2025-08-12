@@ -3,6 +3,8 @@ package config
 
 import (
 	"fmt"
+	"os"
+	"strings"
 
 	"github.com/joho/godotenv"
 	"github.com/pedro/aurora/pkg/provider"
@@ -38,16 +40,6 @@ func Generate() {
 	fmt.Println("...generating config")
 }
 
-func Import() {
-	if err := viper.ReadInConfig(); err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			// Config file not found
-		} else {
-			panic(fmt.Errorf("fatal error config file: %w", err))
-		}
-	}
-}
-
 func Exists() bool {
 	config := viper.ConfigFileUsed()
 
@@ -59,14 +51,24 @@ func Init() {
 	viper.SetConfigType("toml")
 	viper.AddConfigPath("./.aurora/")
 
-	Import()
+	read()
+	mergeEnv()
+	setDefaults()
+}
 
+func read() {
+	if err := viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			// Config file not found
+		} else {
+			panic(fmt.Errorf("fatal error config file: %w", err))
+		}
+	}
+}
+
+func mergeEnv() {
 	godotenv.Load()
 	viper.AutomaticEnv()
-
-	viper.SetDefault("provider.type", "postgres")
-	viper.SetDefault("provider.postgres.port", 5432)
-	viper.SetDefault("provider.postgres.schema", "public")
 
 	viper.BindEnv("provider.type", "PROVIDER_PROVIDER")
 
@@ -77,5 +79,28 @@ func Init() {
 	viper.BindEnv("provider.postgres.host", "PROVIDER_POSTGRES_DATABASE")
 	viper.BindEnv("provider.postgres.host", "PROVIDER_POSTGRES_SCHEMA")
 
-	fmt.Println("Provider:", viper.GetString("provider.postgres.host"))
+	resolveEnvVars()
+}
+
+func setDefaults() {
+	viper.SetDefault("provider.type", "postgres")
+	viper.SetDefault("provider.postgres.port", 5432)
+	viper.SetDefault("provider.postgres.schema", "public")
+}
+
+func resolveEnvVars() {
+	// iterate over all keys and for string values that start with "ENV::" replace them
+	for _, key := range viper.AllKeys() {
+		val := viper.Get(key)
+		strVal, ok := val.(string)
+		if !ok {
+			continue
+		}
+		if strings.HasPrefix(strVal, "ENV::") {
+			envName := strings.TrimPrefix(strVal, "ENV::")
+			if envVal, ok := os.LookupEnv(envName); ok {
+				viper.Set(key, envVal)
+			}
+		}
+	}
 }
