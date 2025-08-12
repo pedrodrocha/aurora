@@ -38,6 +38,12 @@ var envBindings = map[string]string{
 	"provider.postgres.schema":   "PROVIDER_POSTGRES_SCHEMA",
 }
 
+var defaults = map[string]any{
+	"provider.type":            "postgres",
+	"provider.postgres.port":   5432,
+	"provider.postgres.schema": "public",
+}
+
 func Load() (*Config, error) {
 	var cfg Config
 	if err := viper.Unmarshal(&cfg); err != nil {
@@ -108,7 +114,7 @@ func resolveEnvVars() {
 }
 
 func setDefaults() {
-	viper.SetDefault("provider.type", "postgres")
-	viper.SetDefault("provider.postgres.port", 5432)
-	viper.SetDefault("provider.postgres.schema", "public")
+	for key, value := range defaults {
+		viper.SetDefault(key, value)
+	}
 }
