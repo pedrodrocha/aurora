@@ -2,8 +2,7 @@
 package config
 
 import (
-	"fmt"
-
+	"github.com/charmbracelet/huh"
 	"github.com/pedro/aurora/internal/config"
 	"github.com/spf13/cobra"
 )
@@ -14,11 +13,23 @@ func New() *cobra.Command {
 		Short: "Generate configuration file for Aurora",
 		Long:  "Generate interactively a config file for Aurora",
 		Run: func(cmd *cobra.Command, args []string) {
+			var confirm bool
 			exists := config.Exists()
-			loaded, _ := config.Load()
-			fmt.Println("exists: ", exists)
-			fmt.Println("loaded: ", loaded)
-			// config.ExecuteForm()
+
+			if exists {
+				huh.NewConfirm().
+					Title("⚠️  Existing configuration detected").
+					Description("Any changes will overwrite your current Aurora configuration. Are you sure you want to continue?").
+					Affirmative("Continue").
+					Negative("Cancel").
+					Value(&confirm).
+					WithTheme(huh.ThemeBase16()).
+					Run()
+			}
+
+			if !exists || confirm {
+				config.ExecuteForm()
+			}
 
 			// config.Generate()
 		},

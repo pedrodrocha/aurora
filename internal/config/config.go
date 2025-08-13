@@ -28,7 +28,7 @@ type PostgresConfig struct {
 }
 
 var envBindings = map[string]string{
-	"provider.type":              "PROVIDER_TYPE",
+	"provider.provider":          "PROVIDER_TYPE",
 	"provider.postgres.host":     "PROVIDER_POSTGRES_HOST",
 	"provider.postgres.port":     "PROVIDER_POSTGRES_PORT",
 	"provider.postgres.user":     "PROVIDER_POSTGRES_USER",
@@ -38,7 +38,7 @@ var envBindings = map[string]string{
 }
 
 var defaults = map[string]any{
-	"provider.type":            "postgres",
+	"provider.provider":        "postgres",
 	"provider.postgres.port":   5432,
 	"provider.postgres.schema": "public",
 }
@@ -49,6 +49,10 @@ func Load() (*Config, error) {
 	var cfg Config
 	if err := viper.Unmarshal(&cfg); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal config: %w", err)
+	}
+
+	if _, err := provider.Parse(string(cfg.Provider.Type)); err != nil {
+		return nil, fmt.Errorf("invalid provider: %w", err)
 	}
 
 	return &cfg, nil

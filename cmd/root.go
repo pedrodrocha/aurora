@@ -28,5 +28,7 @@ func Execute() {
 func init() {
 	rootCmd.AddCommand(configCmd.New())
 
-	config.Init()
+	if err := config.Init(); err != nil {
+		panic(fmt.Errorf("fatal error initializing aurora: %w", err))
+	}
 }
