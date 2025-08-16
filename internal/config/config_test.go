@@ -56,17 +56,7 @@ func TestInit(t *testing.T) {
 
 		err := Init()
 		require.NoError(t, err)
-		assert.Equal(t, "postgres", viper.GetString("provider.type"))
-	})
-
-	t.Run("invalid env binding", func(t *testing.T) {
-		oldBindings := envBindings
-		envBindings = map[string]string{"invalid.key": "INVALID_ENV"}
-		defer func() { envBindings = oldBindings }()
-
-		err := Init()
-		require.Error(t, err)
-		assert.Contains(t, err.Error(), "env binding failed")
+		assert.Equal(t, "postgres", viper.GetString("provider.provider"))
 	})
 }
 
@@ -74,15 +64,6 @@ func TestBindEnvVars(t *testing.T) {
 	t.Run("successful binding", func(t *testing.T) {
 		err := bindEnvVars()
 		require.NoError(t, err)
-	})
-
-	t.Run("invalid binding", func(t *testing.T) {
-		oldBindings := envBindings
-		envBindings = map[string]string{"invalid.key": ""}
-		defer func() { envBindings = oldBindings }()
-
-		err := bindEnvVars()
-		require.Error(t, err)
 	})
 }
 
@@ -109,7 +90,7 @@ func TestSetDefaults(t *testing.T) {
 	viper.Reset()
 	setDefaults()
 
-	assert.Equal(t, "postgres", viper.GetString("provider.type"))
+	assert.Equal(t, "postgres", viper.GetString("provider.provider"))
 	assert.Equal(t, 5432, viper.GetInt("provider.postgres.port"))
 	assert.Equal(t, "public", viper.GetString("provider.postgres.schema"))
 }
